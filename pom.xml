@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  - Peergreen S.A.S. All rights reserved.
+  - Proprietary and confidential.
+  -
+  - Unless required by applicable law or agreed to in writing, software
+  - distributed under the License is distributed on an "AS IS" BASIS,
+  - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  - See the License for the specific language governing permissions and
+  - limitations under the License.
+  -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>webconsole-pom</artifactId>
+    <groupId>com.peergreen.webconsole</groupId>
+    <version>1.0.0-SNAPSHOT</version>
+    <relativePath>../webconsole-pom/pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <name>Peergreen Web Console :: Logs Scope and its related Extensions</name>
+  <artifactId>logs-scope</artifactId>
+  <packaging>bundle</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>org.apache.felix.ipojo.annotations</artifactId>
+      <version>1.10.1</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.peergreen.webconsole</groupId>
+      <artifactId>web-console-api</artifactId>
+      <version>1.0.0-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.peergreen.kernel</groupId>
+      <artifactId>kernel-api</artifactId>
+      <version>1.0.3-SNAPSHOT</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.vaadin</groupId>
+      <artifactId>vaadin-server</artifactId>
+      <version>${vaadin.version}</version>
+      <scope>provided</scope>
+    </dependency>
+  </dependencies>
+
+</project>
