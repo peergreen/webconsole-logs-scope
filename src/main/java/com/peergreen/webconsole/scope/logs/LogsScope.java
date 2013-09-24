@@ -29,9 +29,16 @@ import com.peergreen.webconsole.UIContext;
 import com.peergreen.webconsole.scope.logs.stream.TableEntry;
 import com.peergreen.webconsole.scope.logs.stream.TextColumnGenerator;
 import com.peergreen.webconsole.scope.logs.stream.TypeFilter;
+import com.vaadin.data.Container;
+import com.vaadin.data.Container.Filter;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.util.filter.And;
+import com.vaadin.data.util.filter.Or;
+import com.vaadin.data.util.filter.SimpleStringFilter;
+import com.vaadin.event.FieldEvents;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.ui.AbstractSelect.ItemDescriptionGenerator;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -41,6 +48,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnHeaderMode;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -51,6 +59,11 @@ import com.vaadin.ui.VerticalLayout;
 @Scope(value = "logs", iconClass = "icon-chat")
 @Provides(specifications=SystemStream.class, properties={@StaticServiceProperty(name="stream.type", value="{System.out,System.err}", type="java.lang.String[]")})
 public class LogsScope extends VerticalLayout implements SystemStream, LogListener {
+
+    /**
+     *
+     */
+    private static final long serialVersionUID = -5350921219132959568L;
 
     @Inject
     private UIContext uiContext;
@@ -68,8 +81,35 @@ public class LogsScope extends VerticalLayout implements SystemStream, LogListen
         setSpacing(true);
         setSizeFull();
 
+        HorizontalLayout topBar = new HorizontalLayout();
+        topBar.setWidth("100%");
+        addComponent(topBar);
         FormLayout form = new FormLayout();
-        form.setWidth("100%");
+        form.setWidth("40%");
+        topBar.addComponent(form);
+
+        TextField textFieldFilter = new TextField();
+        textFieldFilter.setCaption("Filter:");
+        textFieldFilter.setInputPrompt("filter");
+        textFieldFilter.setWidth("60%");
+        textFieldFilter.addTextChangeListener(new TextChangeListener() {
+            @Override
+            public void textChange(final FieldEvents.TextChangeEvent event) {
+                container.removeAllContainerFilters();
+                Container.Filter or = new Or(
+                        new SimpleStringFilter("caller", event.getText().trim(), true, false),
+                        new SimpleStringFilter("text", event.getText().trim(), true, false)
+                );
+                Filter and = new And(or, filter);
+
+                container.addContainerFilter(and);
+            }
+        });
+
+        topBar.addComponent(textFieldFilter);
+
+
+        //form.setWidth("100%");
         form.setSpacing(true);
         form.setMargin(true);
         HorizontalLayout systemLayout = new HorizontalLayout();
@@ -78,7 +118,6 @@ public class LogsScope extends VerticalLayout implements SystemStream, LogListen
         HorizontalLayout loggerLayout = new HorizontalLayout();
         loggerLayout.setCaption("Loggers:");
         form.addComponent(loggerLayout);
-        addComponent(form);
 
         final CheckBox systemOut = new CheckBox("out");
         systemOut.setValue(true);
