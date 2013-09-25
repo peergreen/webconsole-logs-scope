@@ -12,15 +12,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
   <parent>
-    <artifactId>webconsole-pom</artifactId>
-    <groupId>com.peergreen.webconsole</groupId>
-    <version>1.0.0-SNAPSHOT</version>
+    <groupId>com.peergreen</groupId>
+    <artifactId>peergreen-pom</artifactId>
+    <version>3.1</version>
     <relativePath>../webconsole-pom/pom.xml</relativePath>
   </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <name>Peergreen Web Console :: Logs Scope and its related Extensions</name>
+
+  <groupId>com.peergreen.webconsole</groupId>
   <artifactId>logs-scope</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <name>Peergreen Web Console :: Logs Scope and its related Extensions</name>
   <packaging>bundle</packaging>
 
   <dependencies>
@@ -33,21 +36,31 @@
     <dependency>
       <groupId>com.peergreen.webconsole</groupId>
       <artifactId>web-console-api</artifactId>
-      <version>1.0.0-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.peergreen.kernel</groupId>
       <artifactId>kernel-api</artifactId>
-      <version>1.0.3-SNAPSHOT</version>
+      <version>1.0.3</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>com.vaadin</groupId>
       <artifactId>vaadin-server</artifactId>
-      <version>${vaadin.version}</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.peergreen.webconsole</groupId>
+        <artifactId>web-console-bom</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
 </project>
