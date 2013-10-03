@@ -56,7 +56,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @Extension
 @ExtensionPoint("com.peergreen.webconsole.scope")
-@Scope(value = "logs", iconClass = "icon-chat")
+@Scope(name = "logs", domains = "peergreen.admin", iconClass = "icon-chat")
 @Provides(specifications=SystemStream.class, properties={@StaticServiceProperty(name="stream.type", value="{System.out,System.err}", type="java.lang.String[]")})
 public class LogsScope extends VerticalLayout implements SystemStream, LogListener {
 
